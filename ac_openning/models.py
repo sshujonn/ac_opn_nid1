@@ -1,0 +1,53 @@
+from django.db import models
+
+# Create your models here.
+class Customer(models.Model):
+    b_name = models.TextField(max_length=100, blank=True)
+    e_name = models.TextField(max_length=100, blank=True)
+    dob = models.TextField(max_length=100, blank=True)
+    f_name = models.TextField(max_length=100, blank=True)
+    m_name = models.TextField(max_length=100, blank=True)
+    s_name = models.TextField(max_length=100, blank=True)
+    occupation = models.TextField(max_length=100, blank=True)
+    pre_division = models.TextField(max_length=100, blank=True)
+    pre_district = models.TextField(max_length=100, blank=True)
+    pre_rmo = models.TextField(max_length=100, blank=True)
+    pre_citycorp = models.TextField(max_length=100, blank=True)
+    pre_upozila = models.TextField(max_length=100, blank=True)
+    pre_union_ward = models.TextField(max_length=100, blank=True)
+    pre_mouza_moholla = models.TextField(max_length=100, blank=True)
+    pre_additional_mouza_moholla = models.TextField(max_length=100, blank=True)
+    pre_ward_for_union_porishod = models.TextField(max_length=100, blank=True)
+    pre_village_road = models.TextField(max_length=100, blank=True)
+    pre_additional_village_road = models.TextField(max_length=100, blank=True)
+    pre_home_holding_no = models.TextField(max_length=100, blank=True)
+    pre_post_office = models.TextField(max_length=100, blank=True)
+    pre_postal_code = models.TextField(max_length=100, blank=True)
+    pre_region = models.TextField(max_length=100, blank=True)
+    per_division = models.TextField(max_length=100, blank=True)
+    per_district = models.TextField(max_length=100, blank=True)
+    per_rmo = models.TextField(max_length=100, blank=True)
+    per_city_corporation_or_municipality = models.TextField(max_length=100, blank=True)
+    per_upozila = models.TextField(max_length=100, blank=True)
+    per_union_ward = models.TextField(max_length=100, blank=True)
+    per_mouza_moholla = models.TextField(max_length=100, blank=True)
+    per_additional_mouza_moholla = models.TextField(max_length=100, blank=True)
+    per_ward_for_union_porishod = models.TextField(max_length=100, blank=True)
+    per_village_road = models.TextField(max_length=100, blank=True)
+    per_additional_village_road = models.TextField(max_length=100, blank=True)
+    per_home_holding_no = models.TextField(max_length=100, blank=True)
+    per_post_office = models.TextField(max_length=100, blank=True)
+    per_postal_code = models.TextField(max_length=100, blank=True)
+    per_region = models.TextField(max_length=100, blank=True)
+    blood_group = models.TextField(max_length=100, blank=True)
+    national_id = models.TextField(max_length=100, blank=True)
+    pin = models.TextField(max_length=100, blank=True)
+
+
+
+# Create your models here.
+class Account(models.Model):
+    name = models.TextField(max_length=100, blank=True)
+    ac_number = models.TextField(max_length=100, blank=True)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    # nominee = models.ForeignKey(Customer, on_delete=models.CASCADE)
