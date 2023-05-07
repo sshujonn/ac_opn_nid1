@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Easy AC Opening</title>
-</head>
-<body>
 
-<div class="row">
+{% extends "../base.html" %}
+
+{% block content %}
+
+    <div class="row">
     {% if messages %}
             <ul class="messages alert alert-danger hidden">
                 {% for message in messages %}
@@ -21,8 +18,9 @@
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
-                <label for="card_script">Upload NId and Execute:</label>
-                <input class="form-control" type="file" id="card_script" name="card_script">
+                <label for="card_script">Upload Customer NId:</label>
+                <input required class="form-control" type="file" id="card_script" name="card_script">
+                <label for="n_card_script">Upload Nominee NId:</label>
                 <input class="form-control" type="file" id="n_card_script" name="n_card_script">
 
                 <input type="checkbox" id="form_fillup" name="form_fillup" value="form_fillup">
@@ -33,6 +31,5 @@
         <br><br>
     </d4iv>
 </div>
+{% endblock %}
 
-</body>
-</html>

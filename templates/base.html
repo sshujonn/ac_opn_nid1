@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link href="{% static 'css/bootstrap-4.1/bootstrap.min.css' %}" rel="stylesheet" media="all">
+    {% block title %} {% endblock %}
+    {% block custom_css %} {% endblock %}
+</head>
+<body>
+
+    {% block content %}{% endblock %}
+
+    <script src="{% static 'js/bootstrap-4.1/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-4.1/bootstrap.min.js' %}"></script>
+    {% block custom_js %} {% endblock %}
+</body>
+</html>

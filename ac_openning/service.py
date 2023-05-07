@@ -137,19 +137,16 @@ def handle_uploaded_file(fl, name):
     if os.path.exists(dir+name):
         os.remove(dir+name)
 
-    # for f in os.listdir(dir):
-    #     os.remove(os.path.join(dir, f))
-    #     print("done")
-
     try:
         with open(NID_DIRECTORY+name, "wb+") as destination:
             for chunk in fl.chunks():
                 destination.write(chunk)
+            destination.close()
     except Exception as ex:
         print(str(ex))
         # import pdb;pdb.set_trace()
 
-    destination.close()
+
 
 
 def fill_up_form(all_data):
