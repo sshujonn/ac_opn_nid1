@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
+from docx import Document
 
 from ac_openning.models import Customer
 from ac_opn_nid.settings import NID_DIRECTORY, N_NID_DIRECTORY
@@ -151,8 +152,6 @@ def handle_uploaded_file(fl, name):
 
 def fill_up_form(all_data):
 
-    from docx import Document
-
     import docx
     from docx.shared import Pt
     from docx.enum.style import WD_STYLE_TYPE
@@ -211,3 +210,13 @@ def fill_up_form(all_data):
 
 
 
+def process_for_show_data(nid,nnid=None):
+    customer = Customer.objects.get(national_id=nid)
+    from django.forms.models import model_to_dict
+    cust_dict = model_to_dict(customer)
+    nom_dict ={}
+    if nnid is not None:
+        nominee = Customer.objects.get(national_id=nnid)
+        nom_dict = model_to_dict(nominee)
+
+    return {"customer": cust_dict, "nominee": nom_dict}

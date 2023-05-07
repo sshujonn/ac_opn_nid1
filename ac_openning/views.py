@@ -7,7 +7,8 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from ac_openning.service import process_data, handle_uploaded_file, update_or_insert_customer, fill_up_form
+from ac_openning.service import process_data, handle_uploaded_file, update_or_insert_customer, fill_up_form, \
+    process_for_show_data
 
 
 # Create your views here.
@@ -58,8 +59,11 @@ class ShowAllData(APIView):
     renderer_classes = [renderers.TemplateHTMLRenderer]
 
     def get(self, request):
-        import pdb;pdb.set_trace()
-        return Response({}, template_name=self.template_name)
+        # import pdb;pdb.set_trace()
+        nid =request.session['c_nid']
+        nnid =request.session.get('n_nid')
+        data = process_for_show_data(nid, nnid)
+        return Response({"data": data}, template_name=self.template_name)
 
 
 
