@@ -10,7 +10,7 @@ from PIL import ImageDraw
 from PIL import ImageFont
 from docx import Document
 
-from ac_openning.models import Customer
+from ac_openning.models import Customer, Account
 from ac_opn_nid.settings import NID_DIRECTORY, N_NID_DIRECTORY
 
 
@@ -100,7 +100,7 @@ def process_other_info(item):
 
 
 def process_data(file_name):
-    with open(NID_DIRECTORY+file_name, encoding="utf8") as fp:
+    with open(NID_DIRECTORY + file_name, encoding="utf8") as fp:
         soup = BeautifulSoup(fp, 'html.parser')
         item = soup.find_all('div', {'class': 'row border'})
         processed_info = process_basic_info(item)
@@ -114,6 +114,7 @@ def process_data(file_name):
         processed_info = {**processed_info, **process_pre_address(pre_div)}
         processed_info = {**processed_info, **process_other_info(item)}
         return processed_info
+
 
 def update_or_insert_customer(data):
     customer = Customer.objects.filter(national_id=data.get("national_id"))
@@ -135,11 +136,11 @@ def update_or_insert_customer(data):
 def handle_uploaded_file(fl, name):
     dir = NID_DIRECTORY
 
-    if os.path.exists(dir+name):
-        os.remove(dir+name)
+    if os.path.exists(dir + name):
+        os.remove(dir + name)
 
     try:
-        with open(NID_DIRECTORY+name, "wb+") as destination:
+        with open(NID_DIRECTORY + name, "wb+") as destination:
             for chunk in fl.chunks():
                 destination.write(chunk)
             destination.close()
@@ -148,10 +149,7 @@ def handle_uploaded_file(fl, name):
         # import pdb;pdb.set_trace()
 
 
-
-
 def fill_up_form(all_data):
-
     import docx
     from docx.shared import Pt
     from docx.enum.style import WD_STYLE_TYPE
@@ -188,7 +186,8 @@ def fill_up_form(all_data):
         if '__dob__' in paragraph.text:
             paragraph.text = paragraph.text.replace("__dob__", data.get('dob'))
         if '__vill__' in paragraph.text:
-            paragraph.text = paragraph.text.replace("__vill__", data.get('pre_village_road','pre_additional_village_road'))
+            paragraph.text = paragraph.text.replace("__vill__",
+                                                    data.get('pre_village_road', 'pre_additional_village_road'))
         if '__post__' in paragraph.text:
             paragraph.text = paragraph.text.replace("__post__", data.get('pre_post_office'))
         if '__thana__' in paragraph.text:
@@ -196,7 +195,8 @@ def fill_up_form(all_data):
         if '__dist__' in paragraph.text:
             paragraph.text = paragraph.text.replace("__dist__", data.get('pre_district'))
         if '__pvill__' in paragraph.text:
-            paragraph.text = paragraph.text.replace("__pvill__", data.get('per_village_road','per_additional_village_road'))
+            paragraph.text = paragraph.text.replace("__pvill__",
+                                                    data.get('per_village_road', 'per_additional_village_road'))
         if '__ppost__' in paragraph.text:
             paragraph.text = paragraph.text.replace("__ppost__", data.get('per_post_office'))
         if '__pthana__' in paragraph.text:
@@ -206,17 +206,26 @@ def fill_up_form(all_data):
         if '__date__' in paragraph.text:
             paragraph.text = paragraph.text.replace("__date__", str(datetime.datetime.today()))
             # import pdb;pdb.set_trace()
-    doc.save(data.get("national_id")+".docx")
+    doc.save(data.get("national_id") + ".docx")
 
 
-
-def process_for_show_data(nid,nnid=None):
+def process_for_show_data(nid, nnid=None):
     customer = Customer.objects.get(national_id=nid)
     from django.forms.models import model_to_dict
     cust_dict = model_to_dict(customer)
-    nom_dict ={}
+    nom_dict = {}
+    acc_dict = {}
     if nnid is not None:
         nominee = Customer.objects.get(national_id=nnid)
         nom_dict = model_to_dict(nominee)
+    # fields = Account._meta.local_fields
+    fields = Account._meta.get_fields()
+    # import pdb;pdb.set_trace()
+    for item in fields:
+        if item.name != 'customer' and item.name != 'nominee':
+            acc_dict[item.name] = ""
 
-    return {"customer": cust_dict, "nominee": nom_dict}
+    # field_names = [f.name for f in fields]
+    print(acc_dict)
+
+    return {"customer": cust_dict, "nominee": nom_dict, "acc_info": acc_dict}

@@ -1,5 +1,91 @@
-
 {% extends "../base.html" %}
 {% block content %}
-    {{ data }}
+    <div class="row">
+
+        <div class="col-sm-4">
+            <h3>Account Holder</h3>
+            {% for k,v in data.customer.items %}
+
+                {% if k == 'id' %}
+                    <div class="form-group" hidden>
+                        <label for="c_{{ k }}">{{ k }}</label>
+                        <input class="form-control" id="c_{{ k }}" value="{{ v }}">
+                    </div>
+
+                {% else %}
+                    <div class="form-group">
+                        <label for="c_{{ k }}">{{ k }}</label>
+                        <input class="form-control" id="c_{{ k }}" value="{{ v }}">
+                    </div>
+                {% endif %}
+
+            {% endfor %}
+        </div>
+        <div class="col-sm-4">
+            <h3>Account Info</h3>
+            {% for k,v in data.acc_info.items %}
+
+                {% if k == 'id' %}
+                    <div class="form-group" hidden>
+                        <label for="acc_{{ k }}">{{ k }}</label>
+                        <input class="form-control" id="acc_{{ k }}" value="{{ v }}">
+                    </div>
+                {% else %}
+                    <div class="form-group">
+                        <label for="acc_{{ k }}">{{ k }}</label>
+                        <input class="form-control" id="acc_{{ k }}" value="{{ v }}">
+                    </div>
+                {% endif %}
+
+            {% endfor %}
+        </div>
+        <div class="col-sm-4">
+            <h3>Nominee</h3>
+            {% for k,v in data.nominee.items %}
+
+                {% if k == 'id' %}
+                    <div class="form-group" hidden>
+                        <label for="n_{{ k }}">{{ k }}</label>
+                        <input class="form-control" id="n_{{ k }}" value="{{ v }}">
+                    </div>
+
+                {% else %}
+                    <div class="form-group">
+                        <label for="n_{{ k }}">{{ k }}</label>
+                        <input class="form-control" id="n_{{ k }}" value="{{ v }}">
+                    </div>
+                {% endif %}
+
+            {% endfor %}
+        </div>
+
+
+    </div>
+    <p id="demo"></p>
+
+{% endblock %}
+
+{% block custom_js %}
+
+
+    <script>
+
+        function myFunction() {
+            var txt;
+            if (confirm("একাউন্টের নাম কি কাস্টমারের নামে হবে?")) {
+                txt = "হ্যা";
+            } else {
+                txt = "না";
+            }
+            if (txt === "হ্যা"){
+                $("#acc_e_name").val($("#c_e_name").attr('value'));
+                $("#acc_b_name").val($("#c_b_name").attr('value'));
+            }
+        }
+
+        $(document).ready(function () {
+            myFunction()
+        });
+    </script>
+
 {% endblock %}
