@@ -51,13 +51,13 @@ class Customer(models.Model):
     income = models.TextField(max_length=100, blank=True)
     source = models.TextField(max_length=500, blank=True)
     tp_depo_cash_txn = models.TextField(max_length=3, blank=True)
-    tp_depo_cash_txn_amt = models.TextField(max_length=500, blank=True)
+    tp_depo_cash_txn_amt = models.TextField(max_length=9, blank=True)
     tp_depo_trans_txn = models.TextField(max_length=3, blank=True)
-    tp_depo_trans_txn_amt = models.TextField(max_length=500, blank=True)
+    tp_depo_trans_txn_amt = models.TextField(max_length=9, blank=True)
     tp_wd_cash_txn = models.TextField(max_length=3, blank=True)
-    tp_wd_cash_txn_amt = models.TextField(max_length=500, blank=True)
+    tp_wd_cash_txn_amt = models.TextField(max_length=9, blank=True)
     tp_wd_trans_txn = models.TextField(max_length=3, blank=True)
-    tp_wd_trans_txn_amt = models.TextField(max_length=500, blank=True)
+    tp_wd_trans_txn_amt = models.TextField(max_length=9, blank=True)
 
 
 
