@@ -2,7 +2,7 @@
 {% block content %}
     <div class="row">
 
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <h3>Account Holder</h3>
             {% for k,v in data.customer.items %}
 
@@ -21,7 +21,7 @@
 
             {% endfor %}
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <h3>Account Info</h3>
             {% for k,v in data.acc_info.items %}
 
@@ -39,7 +39,7 @@
 
             {% endfor %}
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <h3>Nominee</h3>
             {% for k,v in data.nominee.items %}
 
@@ -58,10 +58,14 @@
 
             {% endfor %}
         </div>
+        <div class="col-sm-3">
+            <input class="btn btn-danger" type="button" id="form_fillup" name="form_fillup" value="Form Fill-up">
+        </div>
 
 
     </div>
-    <p id="demo"></p>
+
+
 
 {% endblock %}
 
@@ -77,7 +81,7 @@
             } else {
                 txt = "না";
             }
-            if (txt === "হ্যা"){
+            if (txt === "হ্যা") {
                 $("#acc_e_name").val($("#c_e_name").attr('value'));
                 $("#acc_b_name").val($("#c_b_name").attr('value'));
             }
