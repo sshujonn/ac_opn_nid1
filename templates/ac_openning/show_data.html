@@ -177,11 +177,12 @@
                 var data = $('#form_acc').serialize();
                 data = data + '&' + $('#form_cust').serialize();
                 data = data + '&' + $('#form_nom').serialize();
+                data = data + '&csrfmiddlewaretoken' + {{ csrf_token  }}
                 console.log(data);
                 $.ajax({
-                    method: 'POST',
-                    url: '/form-fillup/',
-                    data: data,
+                    type: 'post',
+                    url: 'form-fillup/',
+                    data: data
                 });
             });
         });
