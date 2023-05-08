@@ -8,7 +8,6 @@
 {% endblock %}
 {% block content %}
     <div class="row">
-
         <div class="col-sm-1"></div>
         <div class="col-sm-3" style="background-color: #dbffba; border-right: 1px black solid; border-radius: 5px">
             <form id="form_cust">
@@ -140,14 +139,14 @@
             $("#acc_ac_number").val("৩০৮৭");
             $("#acc_nationality").val("বাংলাদেশী");
             $("#acc_income").val("১০,০০০/=");
-            $("#tp_tp_depo_cash_txn").val("১০");
-            $("#tp_tp_depo_trans_txn").val("১০");
-            $("#tp_tp_wd_cash_txn").val("১০");
-            $("#tp_tp_wd_trans_txn").val("১০");
-            $("#tp_tp_depo_cash_txn_amt").val("২,০০,০০০/=");
-            $("#tp_tp_depo_trans_txn_amt").val("২,০০,০০০/=");
-            $("#tp_tp_wd_cash_txn_amt").val("২,০০,০০০/=");
-            $("#tp_tp_wd_trans_txn_amt").val("২,০০,০০০/=");
+            $("#tp_depo_cash_txn").val("১০");
+            $("#tp_depo_trans_txn").val("১০");
+            $("#tp_wd_cash_txn").val("১০");
+            $("#tp_wd_trans_txn").val("১০");
+            $("#tp_depo_cash_txn_amt").val("২,০০,০০০/=");
+            $("#tp_depo_trans_txn_amt").val("২,০০,০০০/=");
+            $("#tp_wd_cash_txn_amt").val("২,০০,০০০/=");
+            $("#tp_wd_trans_txn_amt").val("২,০০,০০০/=");
         }
 
         var a = ['', 'one ', 'two ', 'three ', 'four ', 'five ', 'six ', 'seven ', 'eight ', 'nine ', 'ten ', 'eleven ', 'twelve ', 'thirteen ', 'fourteen ', 'fifteen ', 'sixteen ', 'seventeen ', 'eighteen ', 'nineteen '];
@@ -174,14 +173,13 @@
             myFunction()
 
             $("#form_fillup").click(function () {
+
                 var data = $('#form_acc').serialize();
                 data = data + '&' + $('#form_cust').serialize();
                 data = data + '&' + $('#form_nom').serialize();
-                data = data + '&csrfmiddlewaretoken' + {{ csrf_token  }}
-                console.log(data);
                 $.ajax({
                     type: 'post',
-                    url: 'form-fillup/',
+                    url: '/form-fillup/',
                     data: data
                 });
             });

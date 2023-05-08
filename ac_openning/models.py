@@ -61,10 +61,6 @@ class Customer(models.Model):
     pin = models.TextField(max_length=100, blank=True)
 
 
-
-
-
-
 # Create your models here.
 class Account(models.Model):
     e_name = models.TextField(max_length=100, blank=True)
@@ -86,14 +82,14 @@ class Account(models.Model):
 # Create your models here.
 class TxnProfile(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    tp_depo_cash_txn = models.TextField(max_length=3, blank=True)
-    tp_depo_cash_txn_amt = models.TextField(max_length=9, blank=True)
-    tp_depo_trans_txn = models.TextField(max_length=3, blank=True)
-    tp_depo_trans_txn_amt = models.TextField(max_length=9, blank=True)
-    tp_wd_cash_txn = models.TextField(max_length=3, blank=True)
-    tp_wd_cash_txn_amt = models.TextField(max_length=9, blank=True)
-    tp_wd_trans_txn = models.TextField(max_length=3, blank=True)
-    tp_wd_trans_txn_amt = models.TextField(max_length=9, blank=True)
+    depo_cash_txn = models.TextField(max_length=3, blank=True)
+    depo_cash_txn_amt = models.TextField(max_length=9, blank=True)
+    depo_trans_txn = models.TextField(max_length=3, blank=True)
+    depo_trans_txn_amt = models.TextField(max_length=9, blank=True)
+    wd_cash_txn = models.TextField(max_length=3, blank=True)
+    wd_cash_txn_amt = models.TextField(max_length=9, blank=True)
+    wd_trans_txn = models.TextField(max_length=3, blank=True)
+    wd_trans_txn_amt = models.TextField(max_length=9, blank=True)
 
     def __str__(self):
         return self.account.ac_number

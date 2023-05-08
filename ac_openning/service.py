@@ -231,3 +231,58 @@ def process_for_show_data(nid, nnid=None):
 
 
     return {"customer": cust_dict, "nominee": nom_dict, "acc_info": acc_dict, "tp": tp_dict, "source": source, "occupation": occupation}
+
+
+def process_for_form_fillup(data):
+    acc_dict={}
+    cust_dict={}
+    nom_dict={}
+    tp_dict = {}
+    for k,v in data.items():
+        if 'acc_' in k[0:4]:
+            acc_dict[k.replace('acc_', '')] = v
+        elif 'c_' in k[0:4]:
+            cust_dict[k.replace('c_', '')] = v
+        elif 'n_' in k[0:4]:
+            nom_dict[k.replace('n_', '')] = v
+        else:
+            tp_dict[k.replace('tp_', '')] = v
+    return acc_dict, cust_dict, nom_dict, tp_dict
+
+
+def update_db(acc_dict, cust_dict, nom_dict, tp_dict):
+    customer = Customer.objects.get(national_id=cust_dict.get("national_id"))
+    nominee = Customer.objects.get(national_id=nom_dict.get("national_id"))
+    acc = Account.objects.filter(ac_number=acc_dict.get("ac_number"))
+    if acc.exists():
+        acc = Account.objects.get(ac_number=acc_dict.get("ac_number"))
+        acc_dict.pop("id")
+        acc_dict["nominee"] = nominee.id
+        for item in acc_dict.items():
+            setattr(acc, item[0], item[1])
+        message = "Updated Acc successfully"
+
+    else:
+
+        acc_dict.pop("id")
+        acc_dict["customer_id"] = customer.id
+        acc = Account(**acc_dict)
+        message = "Created Acc successfully"
+    acc.save()
+
+    tp = TxnProfile.objects.filter(account_id=acc.id)
+    if tp.exists():
+        tp = TxnProfile.objects.get(account_id=acc.id)
+        tp_dict.pop("id")
+        for item in tp_dict.items():
+            setattr(tp, item[0], item[1])
+        message = "Updated tp successfully"
+
+    else:
+        tp_dict.pop("id")
+        tp_dict["account_id"] = acc.id
+        tp = TxnProfile(**tp_dict)
+        message = "Created tp successfully"
+    tp.save()
+
+    return message
