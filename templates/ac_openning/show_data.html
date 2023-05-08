@@ -9,98 +9,108 @@
 {% block content %}
     <div class="row">
 
+        <div class="col-sm-1"></div>
         <div class="col-sm-3" style="background-color: #dbffba; border-right: 1px black solid; border-radius: 5px">
-            <h5 class="text-center">Account Holder</h5>
-            {% for k,v in data.customer.items %}
+            <form id="form_cust">
+                <h5 class="text-center">Account Holder</h5>
+                {% for k,v in data.customer.items %}
 
-                {% if k == 'id' %}
-                    <div class="form-group" hidden>
-                        <label for="c_{{ k }}">{{ k }}</label>
-                        <input class="form-control" id="c_{{ k }}" value="{{ v }}">
-                    </div>
+                    {% if k == 'id' %}
+                        <div class="form-group" hidden>
+                            <label for="c_{{ k }}">{{ k }}</label>
+                            <input class="form-control" name="c_{{ k }}" id="c_{{ k }}" value="{{ v }}">
+                        </div>
 
-                {% else %}
-                    <div class="form-group">
-                        <label for="c_{{ k }}">{{ k }}</label>
-                        <input class="form-control" id="c_{{ k }}" value="{{ v }}">
-                    </div>
-                {% endif %}
+                    {% else %}
+                        <div class="form-group">
+                            <label for="c_{{ k }}">{{ k }}</label>
+                            <input class="form-control" name="c_{{ k }}" id="c_{{ k }}" value="{{ v }}" readonly>
+                        </div>
+                    {% endif %}
 
-            {% endfor %}
+                {% endfor %}
+            </form>
+
         </div>
         <div class="col-sm-3" style="background-color: #dcffef; border-right: 1px black solid; border-radius: 5px">
-            <h5 class="text-center">Account Info</h5>
-            {% for k,v in data.acc_info.items %}
+            <form id="form_acc">
+                <h5 class="text-center">Account Info</h5>
+                {% for k,v in data.acc_info.items %}
 
-                {% if k == 'id' %}
-                    <div class="form-group" hidden>
-                        <label for="acc_{{ k }}">{{ k }}</label>
-                        <input class="form-control" id="acc_{{ k }}" value="{{ v }}">
-                    </div>
-                {% else %}
-                    <div class="form-group">
-                        <label for="acc_{{ k }}">{{ k }}</label>
-                        {% if k == 'source' %}
-                            <input id="acc_{{ k }}" class="form-control" type="text" list="source"/>
-                            <datalist id="source">
-                                {% for itm in data.source %}
-                                    <option>{{ itm.name }}</option>
-                                {% endfor %}
-                            </datalist>
-                        {% elif k == 'occupation' %}
-                            <input id="acc_{{ k }}" class="form-control" type="text" list="occupation"/>
-                            <datalist id="occupation">
-                                {% for itm in data.occupation %}
-                                    <option>{{ itm.name }}</option>
-                                {% endfor %}
-                            </datalist>
-                        {% else %}
-                            <input class="form-control" id="acc_{{ k }}" value="{{ v }}">
-                        {% endif %}
-                    </div>
-                {% endif %}
+                    {% if k == 'id' %}
+                        <div class="form-group" hidden>
+                            <label for="acc_{{ k }}">{{ k }}</label>
+                            <input class="form-control" name="acc_{{ k }}" id="acc_{{ k }}" value="{{ v }}">
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <label for="acc_{{ k }}">{{ k }}</label>
+                            {% if k == 'source' %}
+                                <input id="acc_{{ k }}" name="acc_{{ k }}" class="form-control" type="text" list="source"/>
+                                <datalist id="source">
+                                    {% for itm in data.source %}
+                                        <option>{{ itm.name }}</option>
+                                    {% endfor %}
+                                </datalist>
+                            {% elif k == 'occupation' %}
+                                <input id="acc_{{ k }}" class="form-control" type="text" list="occupation"/>
+                                <datalist id="occupation">
+                                    {% for itm in data.occupation %}
+                                        <option>{{ itm.name }}</option>
+                                    {% endfor %}
+                                </datalist>
+                            {% else %}
+                                <input class="form-control" name="acc_{{ k }}" id="acc_{{ k }}" value="{{ v }}">
+                            {% endif %}
+                        </div>
+                    {% endif %}
 
-            {% endfor %}
+                {% endfor %}
 
-            <h5 class="text-center">Transaction profile</h5>
-            {% for k,v in data.tp.items %}
 
-                {% if k == 'id' %}
-                    <div class="form-group" hidden>
-                        <label for="tp_{{ k }}">{{ k }}</label>
-                        <input class="form-control" id="tp_{{ k }}" value="{{ v }}">
-                    </div>
-                {% else %}
-                    <div class="form-group">
-                        <label for="tp_{{ k }}">{{ k }}</label>
-                        <input class="form-control" id="tp_{{ k }}" value="{{ v }}">
-                    </div>
-                {% endif %}
+                <h5 class="text-center">Transaction profile</h5>
+                {% for k,v in data.tp.items %}
 
-            {% endfor %}
+                    {% if k == 'id' %}
+                        <div class="form-group" hidden>
+                            <label for="tp_{{ k }}">{{ k }}</label>
+                            <input class="form-control" name="tp_{{ k }}" id="tp_{{ k }}" value="{{ v }}">
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <label for="tp_{{ k }}">{{ k }}</label>
+                            <input class="form-control" name="tp_{{ k }}" id="tp_{{ k }}" value="{{ v }}">
+                        </div>
+                    {% endif %}
+
+                {% endfor %}
+            </form>
         </div>
         <div class="col-sm-3" style="background-color: #ffdde4; border-right: 1px black solid; border-radius: 5px">
-            <h5 class="text-center">Nominee</h5>
-            {% for k,v in data.nominee.items %}
+            <form id="form_nom">
+                <h5 class="text-center">Nominee</h5>
+                {% for k,v in data.nominee.items %}
 
-                {% if k == 'id' %}
-                    <div class="form-group" hidden>
-                        <label for="n_{{ k }}">{{ k }}</label>
-                        <input class="form-control" id="n_{{ k }}" value="{{ v }}">
-                    </div>
+                    {% if k == 'id' %}
+                        <div class="form-group" hidden>
+                            <label for="n_{{ k }}">{{ k }}</label>
+                            <input class="form-control" name="n_{{ k }}" id="n_{{ k }}" value="{{ v }}">
+                        </div>
 
-                {% else %}
-                    <div class="form-group">
-                        <label for="n_{{ k }}">{{ k }}</label>
-                        <input class="form-control" id="n_{{ k }}" value="{{ v }}">
-                    </div>
-                {% endif %}
+                    {% else %}
+                        <div class="form-group">
+                            <label for="n_{{ k }}">{{ k }}</label>
+                            <input class="form-control" name="n_{{ k }}" id="n_{{ k }}" value="{{ v }}" readonly>
+                        </div>
+                    {% endif %}
 
-            {% endfor %}
+                {% endfor %}
+            </form>
         </div>
-        <div class="col-sm-3">
-            <input class="btn btn-danger" type="button" id="form_fillup" name="form_fillup" value="Form Fill-up">
+        <div class="col-sm-1">
+            <input class="btn btn-success" type="button" id="form_fillup" name="form_fillup" value="Form Fill-up">
         </div>
+        <div class="col-sm-1"></div>
 
 
     </div>
@@ -124,20 +134,23 @@
             if (txt === "হ্যা") {
                 $("#acc_e_name").val($("#c_e_name").attr('value'));
                 $("#acc_b_name").val($("#c_b_name").attr('value'));
-                $("#acc_ac_number").val("৩০৮৭");
-                $("#acc_nationality").val("বাংলাদেশী");
-                $("#acc_income").val("১০,০০০/=");
-                $("#tp_tp_depo_cash_txn").val("১০");
+
             }
 
-            else {
-                $("#acc_ac_number").val("৩০৮৭");
-                $("#acc_nationality").val("বাংলাদেশী");
-                $("#acc_income").val("১০,০০০/=");
-            }
+            $("#acc_ac_number").val("৩০৮৭");
+            $("#acc_nationality").val("বাংলাদেশী");
+            $("#acc_income").val("১০,০০০/=");
+            $("#tp_tp_depo_cash_txn").val("১০");
+            $("#tp_tp_depo_trans_txn").val("১০");
+            $("#tp_tp_wd_cash_txn").val("১০");
+            $("#tp_tp_wd_trans_txn").val("১০");
+            $("#tp_tp_depo_cash_txn_amt").val("২,০০,০০০/=");
+            $("#tp_tp_depo_trans_txn_amt").val("২,০০,০০০/=");
+            $("#tp_tp_wd_cash_txn_amt").val("২,০০,০০০/=");
+            $("#tp_tp_wd_trans_txn_amt").val("২,০০,০০০/=");
         }
 
-    var a = ['', 'one ', 'two ', 'three ', 'four ', 'five ', 'six ', 'seven ', 'eight ', 'nine ', 'ten ', 'eleven ', 'twelve ', 'thirteen ', 'fourteen ', 'fifteen ', 'sixteen ', 'seventeen ', 'eighteen ', 'nineteen '];
+        var a = ['', 'one ', 'two ', 'three ', 'four ', 'five ', 'six ', 'seven ', 'eight ', 'nine ', 'ten ', 'eleven ', 'twelve ', 'thirteen ', 'fourteen ', 'fifteen ', 'sixteen ', 'seventeen ', 'eighteen ', 'nineteen '];
         var b = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
 
         function inWords(num) {
@@ -149,8 +162,8 @@
             str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'lakh ' : '';
             str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'thousand ' : '';
             str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'hundred ' : '';
-            str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'only ' : '';
-            return str;
+            str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) : '';
+            return str + 'only ';
         }
 
         document.getElementById('acc_init_depo').onkeyup = function () {
@@ -159,6 +172,18 @@
 
         $(document).ready(function () {
             myFunction()
+
+            $("#form_fillup").click(function () {
+                var data = $('#form_acc').serialize();
+                data = data + '&' + $('#form_cust').serialize();
+                data = data + '&' + $('#form_nom').serialize();
+                console.log(data);
+                $.ajax({
+                    method: 'POST',
+                    url: '/form-fillup/',
+                    data: data,
+                });
+            });
         });
     </script>
 

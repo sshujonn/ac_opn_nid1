@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', acopn_views.NIDCardScriptLand.as_view(), name='card_script'),
     path('show-data/', acopn_views.ShowAllData.as_view(), name='show_data'),
+    path('form-fillup/', acopn_views.FormFillup.as_view(), name='form_fillup'),
 ]

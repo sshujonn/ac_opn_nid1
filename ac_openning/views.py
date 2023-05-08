@@ -66,4 +66,17 @@ class ShowAllData(APIView):
         return Response({"data": data}, template_name=self.template_name)
 
 
+class FormFillup(APIView):
+    permission_classes = ()
+    template_name = 'ac_openning/show_data.html'
+    renderer_classes = [renderers.TemplateHTMLRenderer]
+
+    def post(self, request):
+        import pdb;pdb.set_trace()
+        nid =request.session['c_nid']
+        nnid =request.session.get('n_nid')
+        data = process_for_show_data(nid, nnid)
+        return Response({"data": data}, template_name=self.template_name)
+
+
 
