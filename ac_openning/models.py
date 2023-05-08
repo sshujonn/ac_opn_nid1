@@ -2,9 +2,22 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
+
+
+class SourceOfIncome(models.Model):
+    name = models.TextField(max_length=1000, blank=True)
+
+    def __str__(self):
+        return self.name
+
+class Occupation(models.Model):
+    name = models.TextField(max_length=1000, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Customer(models.Model):
-    class OccupationChoices(models.TextChoices):
-        Farmer = 'FAR', _('কৃষক')
 
     b_name = models.TextField(max_length=100, blank=True)
     e_name = models.TextField(max_length=100, blank=True)
@@ -12,7 +25,6 @@ class Customer(models.Model):
     f_name = models.TextField(max_length=100, blank=True)
     m_name = models.TextField(max_length=100, blank=True)
     s_name = models.TextField(max_length=100, blank=True)
-    occupation = models.CharField(max_length=6, choices=OccupationChoices.choices, default='')
     occupation_nid = models.TextField(max_length=100, blank=True)
     pre_division = models.TextField(max_length=100, blank=True)
     pre_district = models.TextField(max_length=100, blank=True)
@@ -47,9 +59,7 @@ class Customer(models.Model):
     blood_group = models.TextField(max_length=100, blank=True)
     national_id = models.TextField(max_length=100, blank=True)
     pin = models.TextField(max_length=100, blank=True)
-    nationality = models.TextField(max_length=100, blank=True)
-    income = models.TextField(max_length=100, blank=True)
-    source = models.TextField(max_length=500, blank=True)
+
 
 
 
@@ -60,10 +70,22 @@ class Account(models.Model):
     e_name = models.TextField(max_length=100, blank=True)
     b_name = models.TextField(max_length=100, blank=True)
     ac_number = models.TextField(max_length=100, blank=True)
+    nationality = models.TextField(max_length=100, blank=True)
+    income = models.TextField(max_length=100, blank=True)
+    source = models.TextField(max_length=500, blank=True)
+    occupation = models.TextField(max_length=100, blank=True)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     nominee = models.TextField(max_length=100, blank=True)
     init_depo = models.TextField(max_length=100, blank=True)
     init_depo_word = models.TextField(max_length=100, blank=True)
+
+    def __str__(self):
+        return self.b_name
+
+
+# Create your models here.
+class TxnProfile(models.Model):
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
     tp_depo_cash_txn = models.TextField(max_length=3, blank=True)
     tp_depo_cash_txn_amt = models.TextField(max_length=9, blank=True)
     tp_depo_trans_txn = models.TextField(max_length=3, blank=True)
@@ -73,6 +95,7 @@ class Account(models.Model):
     tp_wd_trans_txn = models.TextField(max_length=3, blank=True)
     tp_wd_trans_txn_amt = models.TextField(max_length=9, blank=True)
 
+    def __str__(self):
+        return self.account.ac_number
 
-class SporceOfIncome(models.Model):
-    name = models.TextField(max_length=1000, blank=True)
+

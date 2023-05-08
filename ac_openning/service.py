@@ -1,5 +1,5 @@
 import datetime
-
+from django.forms.models import model_to_dict
 from django.contrib import messages
 
 import os
@@ -10,7 +10,7 @@ from PIL import ImageDraw
 from PIL import ImageFont
 from docx import Document
 
-from ac_openning.models import Customer, Account
+from ac_openning.models import Customer, Account, TxnProfile, Occupation, SourceOfIncome
 from ac_opn_nid.settings import NID_DIRECTORY, N_NID_DIRECTORY
 
 
@@ -21,7 +21,7 @@ def process_basic_info(item):
                   "Father Name": "f_name",
                   "Mother Name": "m_name",
                   "Spouse Name": "s_name",
-                  "Occupation": "occupation"}
+                  "Occupation": "occupation_nid"}
     processed_info = {}
 
     for itm in basic_info.items():
@@ -211,21 +211,23 @@ def fill_up_form(all_data):
 
 def process_for_show_data(nid, nnid=None):
     customer = Customer.objects.get(national_id=nid)
-    from django.forms.models import model_to_dict
+    source =SourceOfIncome.objects.all()
+    occupation =Occupation.objects.all()
     cust_dict = model_to_dict(customer)
     nom_dict = {}
     acc_dict = {}
+    tp_dict = {}
     if nnid is not None:
         nominee = Customer.objects.get(national_id=nnid)
         nom_dict = model_to_dict(nominee)
-    # fields = Account._meta.local_fields
     fields = Account._meta.get_fields()
-    # import pdb;pdb.set_trace()
     for item in fields:
-        if item.name != 'customer' and item.name != 'nominee':
+        if item.name != 'customer' and item.name != 'nominee' and item.name != 'txnprofile':
             acc_dict[item.name] = ""
+    fields = TxnProfile._meta.get_fields()
+    for item in fields:
+        if item.name != 'account':
+            tp_dict[item.name] = ""
 
-    # field_names = [f.name for f in fields]
-    print(acc_dict)
 
-    return {"customer": cust_dict, "nominee": nom_dict, "acc_info": acc_dict}
+    return {"customer": cust_dict, "nominee": nom_dict, "acc_info": acc_dict, "tp": tp_dict, "source": source, "occupation": occupation}

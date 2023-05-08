@@ -1,9 +1,16 @@
 {% extends "../base.html" %}
+{% block custom_css %}
+    <style>
+        .form-control {
+            padding: 0px 0px;
+        }
+    </style>
+{% endblock %}
 {% block content %}
     <div class="row">
 
-        <div class="col-sm-3">
-            <h3>Account Holder</h3>
+        <div class="col-sm-3" style="background-color: #dbffba; border-right: 1px black solid; border-radius: 5px">
+            <h5 class="text-center">Account Holder</h5>
             {% for k,v in data.customer.items %}
 
                 {% if k == 'id' %}
@@ -21,8 +28,8 @@
 
             {% endfor %}
         </div>
-        <div class="col-sm-3">
-            <h3>Account Info</h3>
+        <div class="col-sm-3" style="background-color: #dcffef; border-right: 1px black solid; border-radius: 5px">
+            <h5 class="text-center">Account Info</h5>
             {% for k,v in data.acc_info.items %}
 
                 {% if k == 'id' %}
@@ -33,14 +40,47 @@
                 {% else %}
                     <div class="form-group">
                         <label for="acc_{{ k }}">{{ k }}</label>
-                        <input class="form-control" id="acc_{{ k }}" value="{{ v }}">
+                        {% if k == 'source' %}
+                            <input id="acc_{{ k }}" class="form-control" type="text" list="source"/>
+                            <datalist id="source">
+                                {% for itm in data.source %}
+                                    <option>{{ itm.name }}</option>
+                                {% endfor %}
+                            </datalist>
+                        {% elif k == 'occupation' %}
+                            <input id="acc_{{ k }}" class="form-control" type="text" list="occupation"/>
+                            <datalist id="occupation">
+                                {% for itm in data.occupation %}
+                                    <option>{{ itm.name }}</option>
+                                {% endfor %}
+                            </datalist>
+                        {% else %}
+                            <input class="form-control" id="acc_{{ k }}" value="{{ v }}">
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+            {% endfor %}
+
+            <h5 class="text-center">Transaction profile</h5>
+            {% for k,v in data.tp.items %}
+
+                {% if k == 'id' %}
+                    <div class="form-group" hidden>
+                        <label for="tp_{{ k }}">{{ k }}</label>
+                        <input class="form-control" id="tp_{{ k }}" value="{{ v }}">
+                    </div>
+                {% else %}
+                    <div class="form-group">
+                        <label for="tp_{{ k }}">{{ k }}</label>
+                        <input class="form-control" id="tp_{{ k }}" value="{{ v }}">
                     </div>
                 {% endif %}
 
             {% endfor %}
         </div>
-        <div class="col-sm-3">
-            <h3>Nominee</h3>
+        <div class="col-sm-3" style="background-color: #ffdde4; border-right: 1px black solid; border-radius: 5px">
+            <h5 class="text-center">Nominee</h5>
             {% for k,v in data.nominee.items %}
 
                 {% if k == 'id' %}
@@ -84,8 +124,38 @@
             if (txt === "হ্যা") {
                 $("#acc_e_name").val($("#c_e_name").attr('value'));
                 $("#acc_b_name").val($("#c_b_name").attr('value'));
+                $("#acc_ac_number").val("৩০৮৭");
+                $("#acc_nationality").val("বাংলাদেশী");
+                $("#acc_income").val("১০,০০০/=");
+                $("#tp_tp_depo_cash_txn").val("১০");
+            }
+
+            else {
+                $("#acc_ac_number").val("৩০৮৭");
+                $("#acc_nationality").val("বাংলাদেশী");
+                $("#acc_income").val("১০,০০০/=");
             }
         }
+
+    var a = ['', 'one ', 'two ', 'three ', 'four ', 'five ', 'six ', 'seven ', 'eight ', 'nine ', 'ten ', 'eleven ', 'twelve ', 'thirteen ', 'fourteen ', 'fifteen ', 'sixteen ', 'seventeen ', 'eighteen ', 'nineteen '];
+        var b = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+
+        function inWords(num) {
+            if ((num = num.toString()).length > 9) return 'overflow';
+            n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+            if (!n) return;
+            var str = '';
+            str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'crore ' : '';
+            str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'lakh ' : '';
+            str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'thousand ' : '';
+            str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'hundred ' : '';
+            str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'only ' : '';
+            return str;
+        }
+
+        document.getElementById('acc_init_depo').onkeyup = function () {
+            $("#acc_init_depo_word").val(inWords(document.getElementById('acc_init_depo').value));
+        };
 
         $(document).ready(function () {
             myFunction()
