@@ -1,50 +1,58 @@
-__ac_b_name__
-__date__
-__ac_e_name__
-__b_name__
-__e_name__
-__dob__
- __f_name__
-__m_name__
- __s_name__
-__nationality__
-__vill__
-__post__
-__thana__
-__dist__
-__pvill__
-__ppost__
-__pthana__
-__pdist__
-__n_name__
-__n_dob__
-__n_f_name__
-__n_m_name__
-__n_vill__
-__n_post__
-__n_thana__
-__n_dist__
-__national_id__
-__b_name__
-__ac_type__
-__ac_goal__
-__occupation__
-__income__
-__source__
-__national_id__
+"__ac_b_name__":"ac_b_name",
+"__date__":
+"__ac_e_name__":"ac_e_name
+"__b_name__":"b_name"
+"__e_name__":"e_name"
+"__dob__":"dob"
+"" __f_name__":"f_name"
+"__m_name__":"m_name"
+"" __s_name__":"s_name"
+"__nationality__":"nationality"
+"__vill__":
+"__post__":
+"__thana__":
+"__dist__":
+"__pvill__":
+"__ppost__":
+"__pthana__":
+"__pdist__":
+"__n_name__":
+"__n_dob__":
+"__n_f_name__":
+"__n_m_name__":
+"__n_vill__":
+"__n_post__":
+"__n_thana__":
+"__n_dist__":
+"__national_id__":
+"__b_name__":
+"__ac_type__":
+"__ac_goal__":
+"__occupation__":
+"__income__":
+"__source__":
+"__national_id__":
+"__dccnt__":
+"__dtcnt__":
+"__dtot_cnt__":
+"__dcamt__":
+"__dtamt__":
+"__dtot_amt__":
+"__wdccnt__":
+"__wdtcnt__":
+"__dtot_cnt__":
+"__wdcamt__":
+"__wdtamt__":
+"__dtot_amt__":
 
-__dccnt__
-__dtcnt__
-__dtot_cnt__
 
-__dcamt__
-__dtamt__
-__dtot_amt__
 
-__wdccnt__
-__wdtcnt__
-__dtot_cnt__
-
-__wdcamt__
-__wdtamt__
-__dtot_amt__
+{'id': 2, 'e_name': 'MST. JULIA KHATUN', 'b_name': 'মোছাঃ জুলিয়া খাতুন', 'ac_number': '৩০৮৭', 'nationality': 'বাংলাদেশী', 'income': '১০,০০০/=', 'source': '', 'occupation': '', 'cust
+omer': 1, 'nominee': '1', 'init_depo': '', 'init_depo_word': '', 'dob': '1996-12-30', 'f_name': 'মোঃ মনোয়ার হোসেন', 'm_name': 'মোছাঃ ফিরোজা বেগম', 's_name': 'মোঃ সাহেব আলী', 'o
+ccupation_nid': 'গৃহিনী', 'pre_division': 'Dhaka', 'pre_district': 'ঝিনাইদহ', 'pre_rmo': '1', 'pre_citycorp': '', 'pre_upozila': 'ঝিনাইদহ সদর', 'pre_union_ward': 'সুরাট', 'pre_mouza_
+moholla': '', 'pre_additional_mouza_moholla': 'রতনহাট', 'pre_ward_for_union_porishod': '3', 'pre_village_road': '', 'pre_additional_village_road': 'রতনহাট', 'pre_home_holding_no': 'প
+শ্চিমপাড়া', 'pre_post_office': 'রতনহাট', 'pre_postal_code': '৭৩০০', 'pre_region': 'খুলনা', 'per_division': 'খুলনা', 'per_district': 'ঝিনাইদহ', 'per_rmo': '1', 'per_city_corporation_o
+r_municipality': '', 'per_upozila': 'ঝিনাইদহ সদর', 'per_union_ward': 'সুরাট', 'per_mouza_moholla': '', 'per_additional_mouza_moholla': 'রতনহাট', 'per_ward_for_union_porishod': '3', '
+per_village_road': '', 'per_additional_village_road': 'রতনহাট', 'per_home_holding_no': 'পশ্চিমপাড়া', 'per_post_office': 'রতনহাট', 'per_postal_code': '৭৩০০', 'per_region': 'খুলনা', 'b
+lood_group': 'O+', 'national_id': '2856273079', 'pin': '19964411994000196', 'account': 5, 'depo_cash_txn': '১০', 'depo_cash_txn_amt': '২,০০,০০০/=', 'depo_trans_txn': '১০', 'depo_tran
+s_txn_amt': '২,০০,০০০/=', 'wd_cash_txn': '১০', 'wd_cash_txn_amt': '২,০০,০০০/=', 'wd_trans_txn': '১০', 'wd_trans_txn_amt': '২,০০,০০০/='}

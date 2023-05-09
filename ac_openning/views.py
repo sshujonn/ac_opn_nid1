@@ -74,8 +74,8 @@ class FormFillup(APIView):
     def post(self, request):
         acc_dict, cust_dict, nom_dict, tp_dict = process_for_form_fillup(request.data)
 
-        message = update_db(acc_dict, cust_dict, nom_dict, tp_dict)
-        file_link = fill_up_form(data)
+        acc_id, cust_id, nom_id, tp_id = update_db(acc_dict, cust_dict, nom_dict, tp_dict)
+        file_link = fill_up_form(acc_id, cust_id, nom_id, tp_id)
         import pdb;pdb.set_trace()
         return Response({"data": data}, template_name=self.template_name)
 

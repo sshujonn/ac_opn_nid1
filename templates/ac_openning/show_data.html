@@ -11,6 +11,7 @@
         <div class="col-sm-1"></div>
         <div class="col-sm-3" style="background-color: #dbffba; border-right: 1px black solid; border-radius: 5px">
             <form id="form_cust">
+            {% csrf_token %}
                 <h5 class="text-center">Account Holder</h5>
                 {% for k,v in data.customer.items %}
 
@@ -33,6 +34,7 @@
         </div>
         <div class="col-sm-3" style="background-color: #dcffef; border-right: 1px black solid; border-radius: 5px">
             <form id="form_acc">
+            {% csrf_token %}
                 <h5 class="text-center">Account Info</h5>
                 {% for k,v in data.acc_info.items %}
 
@@ -87,6 +89,7 @@
         </div>
         <div class="col-sm-3" style="background-color: #ffdde4; border-right: 1px black solid; border-radius: 5px">
             <form id="form_nom">
+            {% csrf_token %}
                 <h5 class="text-center">Nominee</h5>
                 {% for k,v in data.nominee.items %}
 

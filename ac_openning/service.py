@@ -149,7 +149,7 @@ def handle_uploaded_file(fl, name):
         # import pdb;pdb.set_trace()
 
 
-def fill_up_form(all_data):
+def fill_up_form(acc_id, cust_id, nom_id, tp_id):
     import docx
     from docx.shared import Pt
     from docx.enum.style import WD_STYLE_TYPE
@@ -170,15 +170,29 @@ def fill_up_form(all_data):
     # doc.save("test.docx")
 
     # import pdb;pdb.set_trace()
-    data = all_data.get("customer")
-    n_data = all_data.get("nominee")
+
+    account = nom_dict = model_to_dict(Account.objects.get(id=acc_id))
+    customer = model_to_dict(Customer.objects.get(id=cust_id))
+    nominee = model_to_dict(Customer.objects.get(id=nom_id))
+    tp = model_to_dict(TxnProfile.objects.get(id=tp_id))
+
+    account["ac_b_name"] = account["b_name"]
+    account["ac_e_name"] = account["e_name"]
+
+    account.pop("b_name")
+    account.pop("e_name")
+
+    res = { **account, **customer, **nominee, **tp}
+
+    import pdb;pdb.set_trace()
+
     for paragraph in doc.paragraphs:
         if '__b_name__' in paragraph.text:
-            paragraph.text = paragraph.text.replace("__b_name__", data.get('b_name'))
+            paragraph.text = paragraph.text.replace("__b_name__", res.get('b_name'))
         if '__e_name__' in paragraph.text:
-            paragraph.text = paragraph.text.replace("__e_name__", data.get('e_name'))
+            paragraph.text = paragraph.text.replace("__e_name__", res.get('e_name'))
         if '__f_name__' in paragraph.text:
-            paragraph.text = paragraph.text.replace("__f_name__", data.get('f_name'))
+            paragraph.text = paragraph.text.replace("__f_name__", res.get('f_name'))
         if '__m_name__' in paragraph.text:
             paragraph.text = paragraph.text.replace("__m_name__", data.get('m_name'))
         if '__s_name__' in paragraph.text:
@@ -285,4 +299,4 @@ def update_db(acc_dict, cust_dict, nom_dict, tp_dict):
         message = "Created tp successfully"
     tp.save()
 
-    return message
+    return acc.id, customer.id, nominee.id, tp.id
