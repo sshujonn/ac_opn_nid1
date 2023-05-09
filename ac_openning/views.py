@@ -62,6 +62,7 @@ class ShowAllData(APIView):
         # import pdb;pdb.set_trace()
         nid =request.session['c_nid']
         nnid =request.session.get('n_nid')
+        request.session.clear()
         data = process_for_show_data(nid, nnid)
         return Response({"data": data}, template_name=self.template_name)
 
@@ -74,8 +75,9 @@ class FormFillup(APIView):
     def post(self, request):
         acc_dict, cust_dict, nom_dict, tp_dict = process_for_form_fillup(request.data)
 
+        # import pdb;pdb.set_trace()
         acc_id, cust_id, nom_id, tp_id = update_db(acc_dict, cust_dict, nom_dict, tp_dict)
-        file_link = fill_up_form(acc_id, cust_id, nom_id, tp_id)
+        file_link = fill_up_form(acc_id, cust_id, tp_id, nom_id)
         import pdb;pdb.set_trace()
         return Response({"data": data}, template_name=self.template_name)
 

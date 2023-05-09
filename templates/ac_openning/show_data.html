@@ -54,7 +54,7 @@
                                     {% endfor %}
                                 </datalist>
                             {% elif k == 'occupation' %}
-                                <input id="acc_{{ k }}" class="form-control" type="text" list="occupation"/>
+                                <input id="acc_{{ k }}" name="acc_{{ k }}" class="form-control" type="text" list="occupation"/>
                                 <datalist id="occupation">
                                     {% for itm in data.occupation %}
                                         <option>{{ itm.name }}</option>
