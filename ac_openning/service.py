@@ -1,6 +1,6 @@
 import datetime
 from django.forms.models import model_to_dict
-import bangla
+# import bangla
 from django.contrib import messages
 
 import os
@@ -12,7 +12,7 @@ from PIL import ImageFont
 from docx import Document
 
 from ac_openning.models import Customer, Account, TxnProfile, Occupation, SourceOfIncome
-from ac_opn_nid.settings import NID_DIRECTORY, N_NID_DIRECTORY, STATIC_URL
+from ac_opn_nid.settings import NID_DIRECTORY, N_NID_DIRECTORY, STATIC_URL, STATICFILES_DIRS
 from helper.helper import CONVERSION_VAR
 
 
@@ -282,8 +282,8 @@ def fill_up_form(acc_id, cust_id, tp_id, nom_id=None):
         if "__date__" in paragraph.text:
             paragraph.text = paragraph.text.replace("__date__", str(datetime.datetime.today().date()))
 
-    # filepath = STATIC_URL+ "download/" +res.get("national_id") + ".docx"
-    filepath = res.get("national_id") +".docx"
+    relative_filename = '\\download\\'
+    filepath = STATICFILES_DIRS[0] + relative_filename + res.get("national_id") +".docx"
     doc.save(filepath)
 
     return filepath
