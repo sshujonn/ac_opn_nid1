@@ -4,7 +4,7 @@ from rest_framework import response
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 
 from ac_openning.service import process_data, handle_uploaded_file, update_or_insert_customer, fill_up_form, \
@@ -42,14 +42,6 @@ class NIDCardScriptLand(APIView):
             messages.warning(request, n_message)
             request.session['n_nid'] = data.get("nominee").get("national_id")
 
-        # if form_fillup:
-        #     file_link = fill_up_form(data)
-
-        # Response().set_cookie(key="c_nid", value='1234')
-        # Response().set_cookie(key="n_nid", value='16841')
-
-        # import pdb;pdb.set_trace()
-
         return HttpResponseRedirect(reverse('show_data'))
 
 
@@ -59,10 +51,9 @@ class ShowAllData(APIView):
     renderer_classes = [renderers.TemplateHTMLRenderer]
 
     def get(self, request):
-        # import pdb;pdb.set_trace()
         nid =request.session['c_nid']
         nnid =request.session.get('n_nid')
-        request.session.clear()
+
         data = process_for_show_data(nid, nnid)
         return Response({"data": data}, template_name=self.template_name)
 
@@ -75,10 +66,11 @@ class FormFillup(APIView):
     def post(self, request):
         acc_dict, cust_dict, nom_dict, tp_dict = process_for_form_fillup(request.data)
 
-        # import pdb;pdb.set_trace()
         acc_id, cust_id, nom_id, tp_id = update_db(acc_dict, cust_dict, nom_dict, tp_dict)
+
         file_link = fill_up_form(acc_id, cust_id, tp_id, nom_id)
-        return Response({"data": file_link}, template_name=self.template_name)
+        request.session.clear()
+        return JsonResponse({"file_link": file_link}, safe=False)
 
 
 

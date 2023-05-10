@@ -17,6 +17,19 @@ class Occupation(models.Model):
         return self.name
 
 
+class AccType(models.Model):
+    name = models.TextField(max_length=1000, blank=True)
+
+    def __str__(self):
+        return self.name
+
+class AccGoal(models.Model):
+    name = models.TextField(max_length=1000, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Customer(models.Model):
 
     b_name = models.TextField(max_length=100, blank=True)
@@ -68,6 +81,8 @@ class Account(models.Model):
     ac_number = models.TextField(max_length=100, blank=True)
     nationality = models.TextField(max_length=100, blank=True)
     income = models.TextField(max_length=100, blank=True)
+    type = models.TextField(max_length=100, blank=True)
+    goal = models.TextField(max_length=100, blank=True)
     source = models.TextField(max_length=500, blank=True)
     occupation = models.TextField(max_length=100, blank=True)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)

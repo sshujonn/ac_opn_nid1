@@ -11,7 +11,7 @@ from PIL import ImageDraw
 from PIL import ImageFont
 from docx import Document
 
-from ac_openning.models import Customer, Account, TxnProfile, Occupation, SourceOfIncome
+from ac_openning.models import Customer, Account, TxnProfile, Occupation, SourceOfIncome, AccGoal, AccType
 from ac_opn_nid.settings import NID_DIRECTORY, N_NID_DIRECTORY, STATIC_URL, STATICFILES_DIRS
 from helper.helper import CONVERSION_VAR
 
@@ -52,7 +52,6 @@ def process_pre_address(pre_div):
                 "Region": "pre_region"}
     processed_info = {}
 
-    # import pdb;pdb.set_trace()
     for itm in pre_info.items():
         val_div = pre_div.find_all('div', string=itm[0])
         val = val_div[0].find_next_sibling()
@@ -148,7 +147,6 @@ def handle_uploaded_file(fl, name):
             destination.close()
     except Exception as ex:
         print(str(ex))
-        # import pdb;pdb.set_trace()
 
 
 def fill_up_form(acc_id, cust_id, tp_id, nom_id=None):
@@ -173,12 +171,6 @@ def fill_up_form(acc_id, cust_id, tp_id, nom_id=None):
 
     res = { **res, **account, **customer, **tp}
 
-    # import pdb;pdb.set_trace()
-
-    # for paragraph in doc.paragraphs:
-    #     for doc_key, dict_key in CONVERSION_VAR.items():
-    #         if doc_key in doc.paragraphs:
-    #             paragraph.text = paragraph.text.replace(doc_key, res.get(dict_key))
     dtot_cnt = 0
     dtot_amt = 0
     for tab in doc.tables:
@@ -200,7 +192,6 @@ def fill_up_form(acc_id, cust_id, tp_id, nom_id=None):
                     cell.text = cell.text.replace("__wdcamt__", res.get("wd_cash_txn_amt"))
                 if "__wdtamt__" in cell.text:
                     cell.text = cell.text.replace("__wdtamt__", res.get("wd_trans_txn_amt"))
-    # import pdb;pdb.set_trace()
     for paragraph in doc.paragraphs:
         if '__b_name__' in paragraph.text:
             paragraph.text = paragraph.text.replace("__b_name__", res.get('b_name', " "))
@@ -224,11 +215,15 @@ def fill_up_form(acc_id, cust_id, tp_id, nom_id=None):
             paragraph.text = paragraph.text.replace("__m_name__", res.get("m_name", " "))
         if "__s_name__" in paragraph.text:
             paragraph.text = paragraph.text.replace(" __s_name__", res.get("s_name", " "))
+        if "__ac_type__" in paragraph.text:
+            paragraph.text = paragraph.text.replace(" __ac_type__", res.get("type", " "))
+        if "__ac_goal__" in paragraph.text:
+            paragraph.text = paragraph.text.replace(" __ac_goal__", res.get("goal", " "))
         if "__nationality__" in paragraph.text:
             paragraph.text = paragraph.text.replace("__nationality__", res.get("nationality", " "))
         if "__vill__" in paragraph.text:
-            val = res.get('pre_village_road', 'pre_additional_village_road')
-            paragraph.text = paragraph.text.replace("__vill__", val) if val else " "
+            val = res.get('pre_village_road') if res.get('pre_village_road') is not '' else res.get('pre_additional_village_road')
+            paragraph.text = paragraph.text.replace("__vill__", val) if val else paragraph.text.replace("__vill__", " ")
         if "__post__" in paragraph.text:
             paragraph.text = paragraph.text.replace("__post__", res.get("pre_post_office", " "))
         if "__thana__" in paragraph.text:
@@ -236,8 +231,8 @@ def fill_up_form(acc_id, cust_id, tp_id, nom_id=None):
         if "__dist__" in paragraph.text:
             paragraph.text = paragraph.text.replace("__dist__", res.get("pre_district", " "))
         if "__pvill__" in paragraph.text:
-            val = res.get('per_village_road', 'per_additional_village_road')
-            paragraph.text = paragraph.text.replace("__pvill__", val) if val else " "
+            val = res.get('per_village_road') if res.get('per_village_road') is not '' else res.get('per_additional_village_road')
+            paragraph.text = paragraph.text.replace("__pvill__", val) if val else paragraph.text.replace("__pvill__", " ")
         if "__ppost__" in paragraph.text:
             paragraph.text = paragraph.text.replace("__ppost__", res.get("per_post_office", " "))
         if "__pthana__" in paragraph.text:
@@ -253,8 +248,8 @@ def fill_up_form(acc_id, cust_id, tp_id, nom_id=None):
         if "__n_m_name__" in paragraph.text:
             paragraph.text = paragraph.text.replace("__n_m_name__", res.get("n_m_name", " "))
         if "__n_vill__" in paragraph.text:
-            val = res.get('n_pre_village_road', 'n_pre_additional_village_road')
-            paragraph.text = paragraph.text.replace("__n_vill__", val) if val else " "
+            val = res.get('n_pre_village_road') if res.get('n_pre_village_road') is not '' else res.get('n_pre_additional_village_road')
+            paragraph.text = paragraph.text.replace("__n_vill__", val) if val else paragraph.text.replace("__n_vill__", " ")
         if "__n_post__" in paragraph.text:
             paragraph.text = paragraph.text.replace("__n_post__", res.get("n_pre_post_office", " "))
         if "__n_thana__" in paragraph.text:
@@ -282,17 +277,23 @@ def fill_up_form(acc_id, cust_id, tp_id, nom_id=None):
         if "__date__" in paragraph.text:
             paragraph.text = paragraph.text.replace("__date__", str(datetime.datetime.today().date()))
 
-    relative_filename = '\\download\\'
-    filepath = STATICFILES_DIRS[0] + relative_filename + res.get("national_id") +".docx"
-    doc.save(filepath)
+    filename = res.get("national_id")
 
-    return filepath
+    relative_filename = '\\download\\'
+    filepath = relative_filename + filename +".docx"
+    doc.save(STATICFILES_DIRS[0] + filepath)
+
+    return_url = STATIC_URL+'download/' + filename + ".docx"
+
+    return return_url
 
 
 def process_for_show_data(nid, nnid=None):
     customer = Customer.objects.get(national_id=nid)
     source =SourceOfIncome.objects.all()
     occupation =Occupation.objects.all()
+    ac_goal =AccGoal.objects.all()
+    ac_type =AccType.objects.all()
     cust_dict = model_to_dict(customer)
     nom_dict = {}
     acc_dict = {}
@@ -309,8 +310,7 @@ def process_for_show_data(nid, nnid=None):
         if item.name != 'account':
             tp_dict[item.name] = ""
 
-    # import pdb;pdb.set_trace()
-    return {"customer": cust_dict, "nominee": nom_dict, "acc_info": acc_dict, "tp": tp_dict, "source": source, "occupation": occupation}
+    return {"customer": cust_dict, "nominee": nom_dict, "acc_info": acc_dict, "tp": tp_dict, "ac_goal": ac_goal, "ac_type": ac_type, "source": source, "occupation": occupation}
 
 
 def process_for_form_fillup(data):
@@ -339,7 +339,6 @@ def update_db(acc_dict, cust_dict, nom_dict, tp_dict):
         acc_dict.pop("id")
 
         if bool(nom_dict) is not False:
-            # import pdb;pdb.set_trace()
             nominee = Customer.objects.get(national_id=nom_dict.get("national_id"))
             nom_id = nominee.id
             acc_dict["nominee"] = nom_id

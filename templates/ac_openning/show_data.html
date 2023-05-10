@@ -11,7 +11,7 @@
         <div class="col-sm-1"></div>
         <div class="col-sm-3" style="background-color: #dbffba; border-right: 1px black solid; border-radius: 5px">
             <form id="form_cust">
-            {% csrf_token %}
+                {% csrf_token %}
                 <h5 class="text-center">Account Holder</h5>
                 {% for k,v in data.customer.items %}
 
@@ -34,7 +34,7 @@
         </div>
         <div class="col-sm-3" style="background-color: #dcffef; border-right: 1px black solid; border-radius: 5px">
             <form id="form_acc">
-            {% csrf_token %}
+                {% csrf_token %}
                 <h5 class="text-center">Account Info</h5>
                 {% for k,v in data.acc_info.items %}
 
@@ -47,16 +47,34 @@
                         <div class="form-group">
                             <label for="acc_{{ k }}">{{ k }}</label>
                             {% if k == 'source' %}
-                                <input id="acc_{{ k }}" name="acc_{{ k }}" class="form-control" type="text" list="source"/>
+                                <input id="acc_{{ k }}" name="acc_{{ k }}" class="form-control" type="text"
+                                       list="source"/>
                                 <datalist id="source">
                                     {% for itm in data.source %}
                                         <option>{{ itm.name }}</option>
                                     {% endfor %}
                                 </datalist>
                             {% elif k == 'occupation' %}
-                                <input id="acc_{{ k }}" name="acc_{{ k }}" class="form-control" type="text" list="occupation"/>
+                                <input id="acc_{{ k }}" name="acc_{{ k }}" class="form-control" type="text"
+                                       list="occupation"/>
                                 <datalist id="occupation">
                                     {% for itm in data.occupation %}
+                                        <option>{{ itm.name }}</option>
+                                    {% endfor %}
+                                </datalist>
+                            {% elif k == 'goal' %}
+                                <input id="acc_{{ k }}" name="acc_{{ k }}" class="form-control" type="text"
+                                       list="ac_goal"/>
+                                <datalist id="ac_goal">
+                                    {% for itm in data.ac_goal %}
+                                        <option>{{ itm.name }}</option>
+                                    {% endfor %}
+                                </datalist>
+                            {% elif k == 'type' %}
+                                <input id="acc_{{ k }}" name="acc_{{ k }}" class="form-control" type="text"
+                                       list="ac_type"/>
+                                <datalist id="ac_type">
+                                    {% for itm in data.ac_type %}
                                         <option>{{ itm.name }}</option>
                                     {% endfor %}
                                 </datalist>
@@ -89,7 +107,7 @@
         </div>
         <div class="col-sm-3" style="background-color: #ffdde4; border-right: 1px black solid; border-radius: 5px">
             <form id="form_nom">
-            {% csrf_token %}
+                {% csrf_token %}
                 <h5 class="text-center">Nominee</h5>
                 {% for k,v in data.nominee.items %}
 
@@ -183,7 +201,11 @@
                 $.ajax({
                     type: 'post',
                     url: '/form-fillup/',
-                    data: data
+                    data: data,
+                    success: function (data) {
+                        console.log(data);
+                        window.open(data.file_link);
+                    }
                 });
             });
         });

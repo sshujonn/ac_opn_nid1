@@ -10,9 +10,18 @@
 </head>
 <body>
 <p id="csrf_token" hidden>{{ csrf_token }}</p>
-<div class="container-fluid" style="background-image: linear-gradient(to bottom right, #ff958c, #fff09b, #87e885); border-radius: 20px">
-    <h2 class="text-center">Rupali Bank Limited</h2>
-    <h3 class="text-center">Jhenaidah Corp. Branch, Jhenaidah</h3>
+<div class="container-fluid"
+     style="background-image: linear-gradient(to bottom right, #ff958c, #fff09b, #87e885); border-radius: 20px">
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            <a class="text-center" href="{% url 'card_script' %}">
+                <img class="text-center" style="height: 70px" src="{% static 'img/rbl.png' %}" alt="RBL"/>
+            </a>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+
 </div>
 <div class="container">
 
