@@ -7,9 +7,10 @@
     </style>
 {% endblock %}
 {% block content %}
+    <br>
     <div class="row">
         <div class="col-sm-1"></div>
-        <div class="col-sm-3" style="background-color: #dbffba; border-right: 1px black solid; border-radius: 5px">
+        <div class="col-sm-3" style="background-image: linear-gradient(to bottom right, #e95c5c, #c1bca4, #52b657); border-right: 2px white solid; border-radius: 25px">
             <form id="form_cust">
                 {% csrf_token %}
                 <h5 class="text-center">Account Holder</h5>
@@ -17,13 +18,13 @@
 
                     {% if k == 'id' %}
                         <div class="form-group" hidden>
-                            <label for="c_{{ k }}">{{ k }}</label>
+                            <label for="c_{{ k }}" style="font-weight: bold">{{ k }}</label>
                             <input class="form-control" name="c_{{ k }}" id="c_{{ k }}" value="{{ v }}">
                         </div>
 
                     {% else %}
                         <div class="form-group">
-                            <label for="c_{{ k }}">{{ k }}</label>
+                            <label for="c_{{ k }}" style="font-weight: bold">{{ k }}</label>
                             <input class="form-control" name="c_{{ k }}" id="c_{{ k }}" value="{{ v }}" readonly>
                         </div>
                     {% endif %}
@@ -32,7 +33,7 @@
             </form>
 
         </div>
-        <div class="col-sm-3" style="background-color: #dcffef; border-right: 1px black solid; border-radius: 5px">
+        <div class="col-sm-3" style="background-image: linear-gradient(to bottom right, #445fc0, #f3eee6, #b266cc);border-right: 2px white solid; border-radius: 25px">
             <form id="form_acc">
                 {% csrf_token %}
                 <h5 class="text-center">Account Info</h5>
@@ -40,12 +41,12 @@
 
                     {% if k == 'id' %}
                         <div class="form-group" hidden>
-                            <label for="acc_{{ k }}">{{ k }}</label>
+                            <label for="acc_{{ k }}" style="font-weight: bold">{{ k }}</label>
                             <input class="form-control" name="acc_{{ k }}" id="acc_{{ k }}" value="{{ v }}">
                         </div>
                     {% else %}
                         <div class="form-group">
-                            <label for="acc_{{ k }}">{{ k }}</label>
+                            <label for="acc_{{ k }}" style="font-weight: bold">{{ k }}</label>
                             {% if k == 'source' %}
                                 <input id="acc_{{ k }}" name="acc_{{ k }}" class="form-control" type="text"
                                        list="source"/>
@@ -92,7 +93,7 @@
 
                     {% if k == 'id' %}
                         <div class="form-group" hidden>
-                            <label for="tp_{{ k }}">{{ k }}</label>
+                            <label for="tp_{{ k }}" style="font-weight: bold">{{ k }}</label>
                             <input class="form-control" name="tp_{{ k }}" id="tp_{{ k }}" value="{{ v }}">
                         </div>
                     {% else %}
@@ -105,7 +106,7 @@
                 {% endfor %}
             </form>
         </div>
-        <div class="col-sm-3" style="background-color: #ffdde4; border-right: 1px black solid; border-radius: 5px">
+        <div class="col-sm-3" style="background-image: linear-gradient(to bottom right, #64c952, #b3b29d, #d24747); border-right: 2px white solid; border-radius: 25px">
             <form id="form_nom">
                 {% csrf_token %}
                 <h5 class="text-center">Nominee</h5>
@@ -113,13 +114,13 @@
 
                     {% if k == 'id' %}
                         <div class="form-group" hidden>
-                            <label for="n_{{ k }}">{{ k }}</label>
+                            <label for="n_{{ k }}" style="font-weight: bold">{{ k }}</label>
                             <input class="form-control" name="n_{{ k }}" id="n_{{ k }}" value="{{ v }}">
                         </div>
 
                     {% else %}
                         <div class="form-group">
-                            <label for="n_{{ k }}">{{ k }}</label>
+                            <label for="n_{{ k }}" style="font-weight: bold">{{ k }}</label>
                             <input class="form-control" name="n_{{ k }}" id="n_{{ k }}" value="{{ v }}" readonly>
                         </div>
                     {% endif %}
@@ -146,7 +147,7 @@
 
         function myFunction() {
             var txt;
-            if (confirm("একাউন্টের নাম কি কাস্টমারের নামে হবে?")) {
+            if (confirm("ব্যক্তিক হিসাব হলে ওকে করুন, অন্যথায় বাতিল করুন")) {
                 txt = "হ্যা";
             } else {
                 txt = "না";
