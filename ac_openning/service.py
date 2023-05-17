@@ -6,9 +6,8 @@ from django.contrib import messages
 import os
 
 from bs4 import BeautifulSoup
-from PIL import Image
-from PIL import ImageDraw
-from PIL import ImageFont
+import comtypes.client
+import pythoncom
 from docx import Document
 
 from ac_openning.models import Customer, Account, TxnProfile, Occupation, SourceOfIncome, AccGoal, AccType
@@ -283,8 +282,19 @@ def fill_up_form(acc_id, cust_id, tp_id, nom_id=None):
     filepath = relative_filename + filename +".docx"
     doc.save(STATICFILES_DIRS[0] + filepath)
 
-    return_url = STATIC_URL+'download/' + filename + ".docx"
 
+    wdFormatPDF = 17
+
+    in_file = STATICFILES_DIRS[0] + filepath
+    out_file = STATICFILES_DIRS[0]+ "/download/" + filename
+
+    word = comtypes.client.CreateObject('Word.Application', pythoncom.CoInitialize())
+    doc = word.Documents.Open(in_file)
+    doc.SaveAs(out_file, FileFormat=wdFormatPDF)
+    doc.Close()
+    word.Quit()
+
+    return_url = STATIC_URL+'download/' + filename + ".pdf"
     return return_url
 
 
