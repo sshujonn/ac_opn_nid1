@@ -1,0 +1,75 @@
+{% extends "../base.html" %}
+
+{% block custom_css %}
+<style>
+
+label{
+    margin-bottom: 0;
+}
+.form-group{
+    margin-bottom: 0;
+}
+
+</style>
+{% endblock %}
+{% block content %}
+    <br>
+    <div class="row">
+
+        <div class="col-sm-2"><a href="{% url 'cust_all' %}" class="btn btn-link">Show All</a></div>
+        <div class="col-sm-8">
+            <form action="{% url 'cust_entry' %}" method="post">
+                {% csrf_token %}
+                {% for item in form %}
+                    <div class="form-group">
+                        <label for="{{ item.label }}">{{ item.label }}</label>
+                        {{ item }}
+                    </div>
+
+                {% endfor %}
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            <br><br>
+        </div>
+        <div class="col-sm-2">
+            {% if messages %}
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block custom_js %}
+    <script type="text/javascript">
+        jQuery.extend(jQuery.expr[':'], {
+            focusable: function (el, index, selector) {
+                return $(el).is('a, button, :input,[tabindex]');
+            }
+        });
+        $(document).on('keypress', 'input,select', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                // Get all focusable elements on the page
+                var $canfocus = $(':focusable');
+                var index = $canfocus.index(document.activeElement) + 1;
+                if (index >= $canfocus.length) index = 0;
+                $canfocus.eq(index).focus();
+            }
+        });
+
+
+        $(document.activeElement).keydown(function (e) {
+            if (e.which == 113) { //F2
+                e.preventDefault();
+                // Get all focusable elements on the page
+                var $canfocus = $(':focusable');
+                var index = $canfocus.index(document.activeElement) - 1;
+                if (index >= $canfocus.length) index = 0;
+                $canfocus.eq(index).focus();
+            }
+        });
+    </script>
+{% endblock %}
+

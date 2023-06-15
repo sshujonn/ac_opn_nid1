@@ -16,10 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from ac_openning import views as acopn_views
+from remit import views as remit_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', acopn_views.NIDCardScriptLand.as_view(), name='card_script'),
+    path('acc-entry/', acopn_views.NIDCardScriptLand.as_view(), name='card_script'),
+    path('', remit_views.CustEntryLand.as_view(), name='cust_entry'),
+    path('all-customer/', remit_views.ShowAllCustLand.as_view(), name='cust_all'),
     path('show-data/', acopn_views.ShowAllData.as_view(), name='show_data'),
     path('form-fillup/', acopn_views.FormFillup.as_view(), name='form_fillup'),
 ]

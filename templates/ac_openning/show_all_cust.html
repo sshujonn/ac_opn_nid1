@@ -1,0 +1,68 @@
+{% extends "../base.html" %}
+
+{% block custom_css %}
+
+    <style>
+
+        label {
+            margin-bottom: 0;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+    </style>
+{% endblock %}
+{% block content %}
+    <br>
+    <div class="row">
+        <div class="col-sm-10">
+            <table class="table table-bordered" id="all_cust">
+                <thead>
+
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>Date of Birth</th>
+                    <th>Father Name</th>
+                    <th>Mother Name</th>
+                    <th>Spouse Name</th>
+                    <th>Address</th>
+                    <th>occupation</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in data %}
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.dob }}</td>
+                        <td>{{ item.father_name }}</td>
+                        <td>{{ item.mother_name }}</td>
+                        <td>{{ item.spouse_name }}</td>
+                        <td>{{ item.village }}, {{ item.post_office }}, {{ item.thana }}, {{ item.district }}, {{ item.division }}</td>
+                        <td>{{ item.occupation }}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-2"><a class="btn btn-link" href="{% url 'cust_entry' %}">Add New</a></div>
+
+    </div>
+{% endblock %}
+
+{% block custom_js %}
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#all_cust').dataTable();
+    });
+</script>
+{% endblock %}
+
